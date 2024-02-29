@@ -5,29 +5,41 @@ import SearchComponent from "./components/searchComponent";
 import { useEffect, useState } from "react";
 import apiKey from "./config/config";
 import axios from "axios";
+import iziToast from "izitoast";
 
 function App() {
-   const [weather  ,setWeather]= useState(null);
+  const [weather, setWeather] = useState(null);
 
-
-   const fetchWeather=async ()=>{
-    
-   }
-
-  useEffect(() => {
-    ;(async () => {
+  const fetchWeather = async (query) => {
+    try {
+      
       const result = await axios.get(
         "http://api.weatherapi.com/v1/current.json?key=" +
           apiKey +
-          "&q=baduraliya"
+          "&q=" +
+          query
       );
       console.log(result.data);
-
       setWeather(result.data);
-    })();
-  }, [1]);
+    } catch (error) {
+      if(error.response.data){
+        iziToast.error({
+          title: "Error",
+          message: error.response.data.error.message,
+        });
+      }else{
+        iziToast.error({
+          title: "Error",
+          message: "Error Accured",
+        });
+      }
+      
+    }
+  };
 
-
+  const search = (searchText) => {
+    fetchWeather(searchText);
+  };
 
   return (
     <div
@@ -42,7 +54,7 @@ function App() {
       <div className="row">
         <div className="title col col-12 col-lg-10 rounded mx-auto p-5 ">
           <h1 className="text-light ">Weather Api Test</h1>
-          <SearchComponent></SearchComponent>
+          <SearchComponent search={search}></SearchComponent>
 
           {weather && <WeatherSlide weather={weather} />}
         </div>
