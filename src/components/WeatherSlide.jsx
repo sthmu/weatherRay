@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import WeatherItem from "./WeatherItem";
 
 export default function WeatherSlide(props) {
   const temperature = props.weather.current?.temp_c;
@@ -10,18 +11,10 @@ export default function WeatherSlide(props) {
   return (
     <>
       <div className="row text-light title rounded p-5">
-        <div className="col col-lg-3 h5 col-6 pb-5 ">
-        <h6>Temperature</h6> <br /> {temperature} c
-        </div>
-        <div className="col col-lg-3 h5 col-6 pb-5">
-          <h6>Wind Speed</h6> <br /> {wind} Kph
-        </div>
-        <div className="col col-lg-3 h5 col-6 pb-5">
-          <h6>Condition</h6> <br /> {condition}
-        </div>
-        <div className="col col-lg-3 h5 col-6 pb-5">
-          <h6>Humidity</h6> <br /> {humidity}
-        </div>
+        <WeatherItem name={"Temperature"} value={temperature + "c"} />
+        <WeatherItem name={"Wind Speed"} value={wind + " kmph"} />
+        <WeatherItem name={"Condition"} value={condition} />
+        <WeatherItem name={"Humidity"} value={humidity} />
       </div>
     </>
   );
