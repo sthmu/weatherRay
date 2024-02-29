@@ -40,8 +40,8 @@ function App() {
       }}
     >
       <div className="row">
-        <div className="title col col-12 col-lg-8 rounded mx-auto p-5">
-          <h1 className="text-light ">Whether Api Test</h1>
+        <div className="title col col-12 col-lg-10 rounded mx-auto p-5 ">
+          <h1 className="text-light ">Weather Api Test</h1>
           <SearchComponent></SearchComponent>
 
           {weather && <WeatherSlide weather={weather} />}

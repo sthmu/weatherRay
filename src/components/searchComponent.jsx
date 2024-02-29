@@ -4,7 +4,7 @@ import axios from "axios";
 export default function SearchComponent() {
   return (
     <>
-      <form className="justify-content-center m-5 row">
+      <form className="shadow-lg opacity-100 mb-5 rounded justify-content-center m-5 row">
         <div className="col col-11">
           <input
             type="text"
