@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import apiKey from "./config/config";
 import axios from "axios";
 import iziToast from "izitoast";
+import CircularSlider from '@fseehawer/react-circular-slider';
 
 function App() {
   const [weather, setWeather] = useState(null);
 
   const fetchWeather = async (query) => {
     try {
-      
       const result = await axios.get(
         "http://api.weatherapi.com/v1/current.json?key=" +
           apiKey +
