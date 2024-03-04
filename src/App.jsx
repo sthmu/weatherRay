@@ -11,6 +11,7 @@ function App() {
   const [isDragging, setIsDragging] = useState("no");
   const [forecast, setForecast] = useState(null);
   const [day, setDay] = useState(0);
+  const [sliderValue,setSliderValue]=useState(0);
 
   const search = async (searchText) => {
     if (searchText == "") {
@@ -23,6 +24,7 @@ function App() {
     }
     setWeather(weatherObj);
     setForecast(weatherObj.forecast);
+    setSliderValue(Number.parseFloat(weatherObj.time.substr(11,12)))
   };
 
   const changeSlider = (value) => {
@@ -67,7 +69,7 @@ function App() {
 
               <CircularSlider
                 min={0}
-                max={24}
+                max={23}
                 direction={1}
                 label=""
                 labelColor="#005a58"
@@ -81,9 +83,8 @@ function App() {
                 progressColorTo={isDragging ? "#FFFFF" : "#FFFFF"}
                 knobColor={isDragging ? "#F0A367" : "#00bfbd"}
                 isDragging={(value) => setIsDragging(value)}
-                onChange={(value) => {
-                  changeSlider(value);
-                }}
+                onChange={changeSlider}
+                dataIndex={sliderValue}
               />
             </>
           )}
