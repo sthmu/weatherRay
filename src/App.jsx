@@ -6,52 +6,40 @@ import { fetchWeather } from "./services/FetchWeather";
 import { useState } from "react";
 import CircularSlider from "@fseehawer/react-circular-slider";
 
-
-
-
-
 function App() {
   const [weather, setWeather] = useState(null);
   const [isDragging, setIsDragging] = useState("no");
-  const [forecast,setForecast]=useState(null);
-  const [day,setDay]=useState(0);
+  const [forecast, setForecast] = useState(null);
+  const [day, setDay] = useState(0);
 
-  const search =async (searchText) => {
-    
-    if (searchText == "") {      
-      searchText="baduraliya";
+  const search = async (searchText) => {
+    if (searchText == "") {
+      searchText = "baduraliya";
     }
-  
-    const weatherObj=await fetchWeather(searchText);
-    if(weatherObj != null){
+
+    const weatherObj = await fetchWeather(searchText);
+    if (weatherObj != null) {
       setWeather(null);
     }
     setWeather(weatherObj);
     setForecast(weatherObj.forecast);
+  };
 
-    };
-
-    const changeSlider=(value)=>{
-      if(weather != null){
-        console.log(value);
-        const tempWeather = {
-          location:weather.location, 
-          time:forecast.forecastday[day].hour[value].time,
-          temperature: forecast.forecastday[day].hour[value].temp_c,
-          wind: forecast.forecastday[day].hour[value].wind_kph,
-          condition: forecast.forecastday[day].hour[value].condition.text,
-          humidity: forecast.forecastday[day].hour[value].humidity,
-          forecast:forecast.forecastday[day].hour[value].forecast
-        };
-        setWeather(tempWeather);
-      }
+  const changeSlider = (value) => {
+    if (weather != null) {
+      console.log(value);
+      const tempWeather = {
+        location: weather.location,
+        time: forecast.forecastday[day].hour[value].time,
+        temperature: forecast.forecastday[day].hour[value].temp_c,
+        wind: forecast.forecastday[day].hour[value].wind_kph,
+        condition: forecast.forecastday[day].hour[value].condition.text,
+        humidity: forecast.forecastday[day].hour[value].humidity,
+        forecast: forecast.forecastday[day].hour[value].forecast,
+      };
+      setWeather(tempWeather);
     }
-
-
-
-
-
-
+  };
 
   return (
     <div
@@ -65,33 +53,40 @@ function App() {
     >
       <div className="row">
         <div className="title col col-12 col-lg-10 rounded mx-auto p-5 ">
-          <div className="text-light h1 text-end">Weather Ray  <div className="h4 text-light text-opacity-75 "> stay ahead of weather</div></div>
+          <div className="text-light h1 text-end">
+            Weather Ray{" "}
+            <div className="h4 text-light text-opacity-75 ">
+              {" "}
+              stay ahead of weather
+            </div>
+          </div>
           <SearchComponent search={search}></SearchComponent>
-          {weather && <WeatherSlide weather={weather} />}
+          {weather && (
+            <>
+              <WeatherSlide weather={weather} />
 
-          
-            <CircularSlider
-              min={0}
-              max={24}
-              direction={1}
-              label=""
-              labelColor="#005a58"
-              labelBottom={true}
-              labelFontSize="1.6rem"
-              knobPosition="left"
-              appendToValue=" h"
-              valueFontSize="4rem"
-              trackColor="#eeeeee"
-              progressColorFrom={isDragging ? "#F0A356" : "#00bfbd"}
-              progressColorTo={isDragging ? "#FFFFF" : "#FFFFF"}
-              knobColor={isDragging ? "#F0A367" : "#00bfbd"}
-              isDragging={(value) => setIsDragging(value)}
-              onChange={ value => { changeSlider(value); } }
-
-            />
-
-
-       
+              <CircularSlider
+                min={0}
+                max={24}
+                direction={1}
+                label=""
+                labelColor="#005a58"
+                labelBottom={true}
+                labelFontSize="1.6rem"
+                knobPosition="left"
+                appendToValue=" h"
+                valueFontSize="4rem"
+                trackColor="#eeeeee"
+                progressColorFrom={isDragging ? "#F0A356" : "#00bfbd"}
+                progressColorTo={isDragging ? "#FFFFF" : "#FFFFF"}
+                knobColor={isDragging ? "#F0A367" : "#00bfbd"}
+                isDragging={(value) => setIsDragging(value)}
+                onChange={(value) => {
+                  changeSlider(value);
+                }}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>
