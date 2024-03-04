@@ -5,7 +5,7 @@ import iziToast from "izitoast";
 const fetchWeather = async (query) => {
   try {
     const result = await axios.get(
-      "http://api.weatherapi.com/v1/forecast.json?key=" +
+      "https://api.weatherapi.com/v1/forecast.json?key=" +
         apiKey +
         "&q=" +
         query +
