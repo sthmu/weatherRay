@@ -19,7 +19,7 @@ const fetchWeather = async (query) => {
       location:{
         name:result.data.location.name,
         country:result.data.location.country,
-        region:result.data.location.region
+        region:result.data.location.region,
       },
       time:result.data.current.last_updated,
       temperature: result.data.current.temp_c,

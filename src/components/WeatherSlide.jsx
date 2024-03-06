@@ -10,14 +10,23 @@ export default function WeatherSlide(props) {
 
   return (
     <>
-      <div className="text-light h2">
-        {props.weather.location?.name}
-        <div className="text-light h5 text-opacity-75 ">
-        {props.weather.location.country+ " " +props.weather.location.region+"  "+props.weather.time}
+      <div className="text-light h2">{props.weather.location?.name}</div>
+      <div className="row text-light">
+        <div className={`col btn btn- col-2 title rounded-5 py-1 ${props.day==0?"disabled" :""}`} onClick={()=>props.changeDate(-1)}>
+          <i className="bi bi-caret-left h1 text-info "></i>
         </div>
-      
+        <div className="text-light h5 text-opacity-75 col col-8 ">
+          {props.weather.location.country +
+            " " +
+            props.weather.location.region +
+            "  " +
+            props.weather.time}
+        </div>
+        <div className={`col btn btn- col-2 title rounded-5 py-1 ${props.day==2?"disabled" :""}`} onClick={()=>props.changeDate(+1)}>
+          <i className="bi bi-caret-right h1 text-info "></i>
+        </div>
       </div>
-
+     
       <div className="row text-light p-5 justify-content-center  ">
         <WeatherItem name={"Temperature"} value={temperature + "c"} />
         <WeatherItem name={"Wind Speed"} value={wind + " kmph"} />

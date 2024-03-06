@@ -6,14 +6,23 @@ import { fetchWeather } from "./services/FetchWeather";
 import { useState } from "react";
 import CircularSlider from "@fseehawer/react-circular-slider";
 
+var day = 0;
+const setDay = (value) => {
+  day = value;
+};
+
+
 function App() {
   const [weather, setWeather] = useState(null);
   const [isDragging, setIsDragging] = useState("no");
   const [forecast, setForecast] = useState(null);
-  const [day, setDay] = useState(0);
-  const [sliderValue,setSliderValue]=useState(0);
+  
+  const [sliderValue, setSliderValue] = useState(0);
 
+ 
   const search = async (searchText) => {
+    setDay(0);
+
     if (searchText == "") {
       searchText = "baduraliya";
     }
@@ -24,23 +33,33 @@ function App() {
     }
     setWeather(weatherObj);
     setForecast(weatherObj.forecast);
-    setSliderValue(Number.parseFloat(weatherObj.time.substr(11,12)))
+    setSliderValue(Number.parseFloat(weatherObj.time.substr(11, 12)));
   };
 
   const changeSlider = (value) => {
-    if (weather != null) {
-      console.log(value);
-      const tempWeather = {
-        location: weather.location,
-        time: forecast.forecastday[day].hour[value].time,
-        temperature: forecast.forecastday[day].hour[value].temp_c,
-        wind: forecast.forecastday[day].hour[value].wind_kph,
-        condition: forecast.forecastday[day].hour[value].condition.text,
-        humidity: forecast.forecastday[day].hour[value].humidity,
-        forecast: forecast.forecastday[day].hour[value].forecast,
-      };
-      setWeather(tempWeather);
+    setSliderValue(value);
+    changeWeather();
+  };
+
+  let changeDay = (value) => {
+    var tempVal = (value + day);
+    if (tempVal <= 2 && tempVal >= 0) {
+      day = tempVal;
+      changeWeather();
     }
+  };
+
+  const changeWeather = () => {
+    const tempWeather = {
+      location: weather.location,
+      time: forecast.forecastday[day].hour[sliderValue].time,
+      temperature: forecast.forecastday[day].hour[sliderValue].temp_c,
+      wind: forecast.forecastday[day].hour[sliderValue].wind_kph,
+      condition: forecast.forecastday[day].hour[sliderValue].condition.text,
+      humidity: forecast.forecastday[day].hour[sliderValue].humidity,
+      forecast: forecast.forecastday[day].hour[sliderValue].forecast,
+    };
+    setWeather(tempWeather);
   };
 
   return (
@@ -65,7 +84,7 @@ function App() {
           <SearchComponent search={search}></SearchComponent>
           {weather && (
             <>
-              <WeatherSlide weather={weather} />
+              <WeatherSlide weather={weather} changeDate={changeDay} day={day}/>
 
               <CircularSlider
                 min={0}
