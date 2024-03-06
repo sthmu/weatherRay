@@ -2,6 +2,7 @@ import background from "./assets/Designer.jpeg";
 import "./App.css";
 import WeatherSlide from "./components/WeatherSlide";
 import SearchComponent from "./components/searchComponent";
+import Footer from "./components/Footer";
 import { fetchWeather } from "./services/FetchWeather";
 import { useState } from "react";
 import CircularSlider from "@fseehawer/react-circular-slider";
@@ -63,6 +64,7 @@ function App() {
   };
 
   return (
+    <>
     <div
       className="p-5"
       style={{
@@ -110,6 +112,8 @@ function App() {
         </div>
       </div>
     </div>
+    <Footer></Footer>
+    </>
   );
 }
 
